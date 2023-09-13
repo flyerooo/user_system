@@ -1,0 +1,31 @@
+syntax="proto3";
+
+option go_package="user_growth/pb";
+
+package UserGrowth;
+
+// 用户积分
+service UserCoin {
+  // 获取所有的积分任务列表
+  rpc ListTasks(ListTasksRequest) returns (ListTasksReply) {}
+  // 获取用户的积分信息
+  rpc UserCoinInfo(UserCoinInfoRequest) returns (UserCoinInfoReply) {}
+  // 获取用户的积分明细列表
+  rpc UserDetails(UserDetailsRequest) returns (UserDetailsReply) {}
+  // 调整用户积分-奖励和惩罚都是这个接口
+  rpc UserCoinChange(UserCoinChangeRequest) returns (UserCoinChangeReply) {}
+}
+
+// 用户等级
+service UserGrade {
+  // 获取所有的等级信息列表
+  rpc ListGrades(ListGradesRequest) returns (ListGradesReply) {}
+  // 获取等级的特权列表
+  rpc ListGradePrivileges(ListGradePrivilegesRequest) returns (ListGradePrivilegesReply) {}
+  // 检查用户是否有某个产品特权
+  rpc CheckUserPrivilege(CheckUserPrivilegeRequest) returns (CheckUserPrivilegeReply) {}
+  // 获取用户的等级信息
+  rpc UserGradeInfo(UserGradeInfoRequest) returns (UserGradeInfoReply) {}
+  // 调整用户的等级成长值
+  rpc UserGradeChange(UserGradeChangeRequest) returns (UserGradeChangeReply) {}
+}
