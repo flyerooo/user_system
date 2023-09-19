@@ -1,15 +1,29 @@
 package main
 
 import (
+	_ "github.com/go-sql-driver/mysql"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 	"log"
 	"net"
+	"time"
+	"user_growth/conf"
+	"user_growth/dbhelper"
 	"user_growth/pb"
 	"user_growth/ugserver"
 )
 
+func initDb() {
+	// default UTC time location
+	time.Local = time.UTC
+	// Load global config
+	conf.LoadConfigs()
+	// Initialize db
+	dbhelper.InitDb()
+}
+
 func main() {
+	initDb()
 	lis, err := net.Listen("tcp", ":80")
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
