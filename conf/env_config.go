@@ -18,7 +18,7 @@ type ProjectConfig struct {
 	Db struct {
 		Engine          string // mysql
 		Username        string // root
-		Password        string // 12345678
+		Password        string // p2pdev
 		Host            string // localhost
 		Port            int    // 3306
 		Database        string // user_growth
