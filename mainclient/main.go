@@ -5,24 +5,50 @@ import (
 	"flag"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
+	"google.golang.org/grpc/keepalive"
 	"log"
+	"sync"
 	"time"
 	"user_growth/pb"
 )
 
+var connPool = sync.Pool{
+	New: func() any {
+		// 连接到服务
+		addr := flag.String("addr", "localhost:80", "the address to connect to")
+		opts := []grpc.DialOption{
+			grpc.WithTransportCredentials(insecure.NewCredentials()),
+			grpc.WithWriteBufferSize(1024 * 1024 * 1), // 默认32KB
+			grpc.WithReadBufferSize(1024 * 1024 * 1),  // 默认32KB,
+			grpc.WithKeepaliveParams(keepalive.ClientParameters{
+				Time:                10 * time.Minute,
+				Timeout:             10 * time.Second,
+				PermitWithoutStream: false,
+			}),
+		}
+		conn, err := grpc.Dial(*addr, opts...)
+		if err != nil {
+			log.Fatalf("did not connect: %v", err)
+		}
+		return conn
+	},
+}
+
+func GetConn() *grpc.ClientConn {
+	return connPool.Get().(*grpc.ClientConn)
+}
+func CloseConn(conn *grpc.ClientConn) {
+	connPool.Put(conn)
+}
+
 func main() {
-	// 连接到服务
-	addr := flag.String("addr", "localhost:80", "the address to connect to")
-	// 安全选项
-	opts := []grpc.DialOption{
-		grpc.WithTransportCredentials(insecure.NewCredentials()),
+	conn := GetConn()
+	if conn != nil {
+		defer CloseConn(conn)
+	} else {
+		log.Fatalf("connection nil")
 	}
-	conn, err := grpc.Dial(*addr, opts...)
-	if err != nil {
-		log.Fatalf("did not connect: error=%v\n", err)
-	}
-	defer conn.Close()
-	// 请求服务超时处理
+	// 请求服务
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
 	// 新建客户端
