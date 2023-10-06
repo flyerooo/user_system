@@ -35,14 +35,6 @@ func request_UserCoin_ListTasks_0(ctx context.Context, marshaler runtime.Marshal
 	var protoReq ListTasksRequest
 	var metadata runtime.ServerMetadata
 
-	newReader, berr := utilities.IOReaderFactory(req.Body)
-	if berr != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
-	}
-	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-
 	msg, err := client.ListTasks(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
@@ -51,14 +43,6 @@ func request_UserCoin_ListTasks_0(ctx context.Context, marshaler runtime.Marshal
 func local_request_UserCoin_ListTasks_0(ctx context.Context, marshaler runtime.Marshaler, server UserCoinServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ListTasksRequest
 	var metadata runtime.ServerMetadata
-
-	newReader, berr := utilities.IOReaderFactory(req.Body)
-	if berr != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
-	}
-	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
 
 	msg, err := server.ListTasks(ctx, &protoReq)
 	return msg, metadata, err
@@ -171,14 +155,6 @@ func request_UserGrade_ListGrades_0(ctx context.Context, marshaler runtime.Marsh
 	var protoReq ListGradesRequest
 	var metadata runtime.ServerMetadata
 
-	newReader, berr := utilities.IOReaderFactory(req.Body)
-	if berr != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
-	}
-	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-
 	msg, err := client.ListGrades(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
@@ -187,14 +163,6 @@ func request_UserGrade_ListGrades_0(ctx context.Context, marshaler runtime.Marsh
 func local_request_UserGrade_ListGrades_0(ctx context.Context, marshaler runtime.Marshaler, server UserGradeServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ListGradesRequest
 	var metadata runtime.ServerMetadata
-
-	newReader, berr := utilities.IOReaderFactory(req.Body)
-	if berr != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
-	}
-	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
 
 	msg, err := server.ListGrades(ctx, &protoReq)
 	return msg, metadata, err
@@ -343,7 +311,7 @@ func local_request_UserGrade_UserGradeChange_0(ctx context.Context, marshaler ru
 // Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterUserCoinHandlerFromEndpoint instead.
 func RegisterUserCoinHandlerServer(ctx context.Context, mux *runtime.ServeMux, server UserCoinServer) error {
 
-	mux.Handle("POST", pattern_UserCoin_ListTasks_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_UserCoin_ListTasks_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -351,7 +319,7 @@ func RegisterUserCoinHandlerServer(ctx context.Context, mux *runtime.ServeMux, s
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/UserGrowth.UserCoin/ListTasks", runtime.WithHTTPPathPattern("/UserGrowth.UserCoin/ListTasks"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/UserGrowth.UserCoin/ListTasks", runtime.WithHTTPPathPattern("/v1/UserGrowth.UserCoin/ListTasks"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -376,7 +344,7 @@ func RegisterUserCoinHandlerServer(ctx context.Context, mux *runtime.ServeMux, s
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/UserGrowth.UserCoin/UserCoinInfo", runtime.WithHTTPPathPattern("/UserGrowth.UserCoin/UserCoinInfo"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/UserGrowth.UserCoin/UserCoinInfo", runtime.WithHTTPPathPattern("/v1/UserGrowth.UserCoin/UserCoinInfo"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -401,7 +369,7 @@ func RegisterUserCoinHandlerServer(ctx context.Context, mux *runtime.ServeMux, s
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/UserGrowth.UserCoin/UserDetails", runtime.WithHTTPPathPattern("/UserGrowth.UserCoin/UserDetails"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/UserGrowth.UserCoin/UserDetails", runtime.WithHTTPPathPattern("/v1/UserGrowth.UserCoin/UserDetails"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -426,7 +394,7 @@ func RegisterUserCoinHandlerServer(ctx context.Context, mux *runtime.ServeMux, s
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/UserGrowth.UserCoin/UserCoinChange", runtime.WithHTTPPathPattern("/UserGrowth.UserCoin/UserCoinChange"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/UserGrowth.UserCoin/UserCoinChange", runtime.WithHTTPPathPattern("/v1/UserGrowth.UserCoin/UserCoinChange"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -452,7 +420,7 @@ func RegisterUserCoinHandlerServer(ctx context.Context, mux *runtime.ServeMux, s
 // Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterUserGradeHandlerFromEndpoint instead.
 func RegisterUserGradeHandlerServer(ctx context.Context, mux *runtime.ServeMux, server UserGradeServer) error {
 
-	mux.Handle("POST", pattern_UserGrade_ListGrades_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_UserGrade_ListGrades_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -460,7 +428,7 @@ func RegisterUserGradeHandlerServer(ctx context.Context, mux *runtime.ServeMux, 
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/UserGrowth.UserGrade/ListGrades", runtime.WithHTTPPathPattern("/UserGrowth.UserGrade/ListGrades"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/UserGrowth.UserGrade/ListGrades", runtime.WithHTTPPathPattern("/v1/UserGrowth.UserGrade/ListGrades"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -485,7 +453,7 @@ func RegisterUserGradeHandlerServer(ctx context.Context, mux *runtime.ServeMux, 
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/UserGrowth.UserGrade/ListGradePrivileges", runtime.WithHTTPPathPattern("/UserGrowth.UserGrade/ListGradePrivileges"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/UserGrowth.UserGrade/ListGradePrivileges", runtime.WithHTTPPathPattern("/v1/UserGrowth.UserGrade/ListGradePrivileges"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -510,7 +478,7 @@ func RegisterUserGradeHandlerServer(ctx context.Context, mux *runtime.ServeMux, 
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/UserGrowth.UserGrade/CheckUserPrivilege", runtime.WithHTTPPathPattern("/UserGrowth.UserGrade/CheckUserPrivilege"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/UserGrowth.UserGrade/CheckUserPrivilege", runtime.WithHTTPPathPattern("/v1/UserGrowth.UserGrade/CheckUserPrivilege"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -535,7 +503,7 @@ func RegisterUserGradeHandlerServer(ctx context.Context, mux *runtime.ServeMux, 
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/UserGrowth.UserGrade/UserGradeInfo", runtime.WithHTTPPathPattern("/UserGrowth.UserGrade/UserGradeInfo"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/UserGrowth.UserGrade/UserGradeInfo", runtime.WithHTTPPathPattern("/v1/UserGrowth.UserGrade/UserGradeInfo"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -560,7 +528,7 @@ func RegisterUserGradeHandlerServer(ctx context.Context, mux *runtime.ServeMux, 
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/UserGrowth.UserGrade/UserGradeChange", runtime.WithHTTPPathPattern("/UserGrowth.UserGrade/UserGradeChange"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/UserGrowth.UserGrade/UserGradeChange", runtime.WithHTTPPathPattern("/v1/UserGrowth.UserGrade/UserGradeChange"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -618,13 +586,13 @@ func RegisterUserCoinHandler(ctx context.Context, mux *runtime.ServeMux, conn *g
 // "UserCoinClient" to call the correct interceptors.
 func RegisterUserCoinHandlerClient(ctx context.Context, mux *runtime.ServeMux, client UserCoinClient) error {
 
-	mux.Handle("POST", pattern_UserCoin_ListTasks_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_UserCoin_ListTasks_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/UserGrowth.UserCoin/ListTasks", runtime.WithHTTPPathPattern("/UserGrowth.UserCoin/ListTasks"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/UserGrowth.UserCoin/ListTasks", runtime.WithHTTPPathPattern("/v1/UserGrowth.UserCoin/ListTasks"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -646,7 +614,7 @@ func RegisterUserCoinHandlerClient(ctx context.Context, mux *runtime.ServeMux, c
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/UserGrowth.UserCoin/UserCoinInfo", runtime.WithHTTPPathPattern("/UserGrowth.UserCoin/UserCoinInfo"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/UserGrowth.UserCoin/UserCoinInfo", runtime.WithHTTPPathPattern("/v1/UserGrowth.UserCoin/UserCoinInfo"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -668,7 +636,7 @@ func RegisterUserCoinHandlerClient(ctx context.Context, mux *runtime.ServeMux, c
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/UserGrowth.UserCoin/UserDetails", runtime.WithHTTPPathPattern("/UserGrowth.UserCoin/UserDetails"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/UserGrowth.UserCoin/UserDetails", runtime.WithHTTPPathPattern("/v1/UserGrowth.UserCoin/UserDetails"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -690,7 +658,7 @@ func RegisterUserCoinHandlerClient(ctx context.Context, mux *runtime.ServeMux, c
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/UserGrowth.UserCoin/UserCoinChange", runtime.WithHTTPPathPattern("/UserGrowth.UserCoin/UserCoinChange"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/UserGrowth.UserCoin/UserCoinChange", runtime.WithHTTPPathPattern("/v1/UserGrowth.UserCoin/UserCoinChange"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -710,13 +678,13 @@ func RegisterUserCoinHandlerClient(ctx context.Context, mux *runtime.ServeMux, c
 }
 
 var (
-	pattern_UserCoin_ListTasks_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"UserGrowth.UserCoin", "ListTasks"}, ""))
+	pattern_UserCoin_ListTasks_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "UserGrowth.UserCoin", "ListTasks"}, ""))
 
-	pattern_UserCoin_UserCoinInfo_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"UserGrowth.UserCoin", "UserCoinInfo"}, ""))
+	pattern_UserCoin_UserCoinInfo_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "UserGrowth.UserCoin", "UserCoinInfo"}, ""))
 
-	pattern_UserCoin_UserDetails_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"UserGrowth.UserCoin", "UserDetails"}, ""))
+	pattern_UserCoin_UserDetails_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "UserGrowth.UserCoin", "UserDetails"}, ""))
 
-	pattern_UserCoin_UserCoinChange_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"UserGrowth.UserCoin", "UserCoinChange"}, ""))
+	pattern_UserCoin_UserCoinChange_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "UserGrowth.UserCoin", "UserCoinChange"}, ""))
 )
 
 var (
@@ -767,13 +735,13 @@ func RegisterUserGradeHandler(ctx context.Context, mux *runtime.ServeMux, conn *
 // "UserGradeClient" to call the correct interceptors.
 func RegisterUserGradeHandlerClient(ctx context.Context, mux *runtime.ServeMux, client UserGradeClient) error {
 
-	mux.Handle("POST", pattern_UserGrade_ListGrades_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_UserGrade_ListGrades_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/UserGrowth.UserGrade/ListGrades", runtime.WithHTTPPathPattern("/UserGrowth.UserGrade/ListGrades"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/UserGrowth.UserGrade/ListGrades", runtime.WithHTTPPathPattern("/v1/UserGrowth.UserGrade/ListGrades"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -795,7 +763,7 @@ func RegisterUserGradeHandlerClient(ctx context.Context, mux *runtime.ServeMux, 
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/UserGrowth.UserGrade/ListGradePrivileges", runtime.WithHTTPPathPattern("/UserGrowth.UserGrade/ListGradePrivileges"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/UserGrowth.UserGrade/ListGradePrivileges", runtime.WithHTTPPathPattern("/v1/UserGrowth.UserGrade/ListGradePrivileges"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -817,7 +785,7 @@ func RegisterUserGradeHandlerClient(ctx context.Context, mux *runtime.ServeMux, 
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/UserGrowth.UserGrade/CheckUserPrivilege", runtime.WithHTTPPathPattern("/UserGrowth.UserGrade/CheckUserPrivilege"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/UserGrowth.UserGrade/CheckUserPrivilege", runtime.WithHTTPPathPattern("/v1/UserGrowth.UserGrade/CheckUserPrivilege"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -839,7 +807,7 @@ func RegisterUserGradeHandlerClient(ctx context.Context, mux *runtime.ServeMux, 
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/UserGrowth.UserGrade/UserGradeInfo", runtime.WithHTTPPathPattern("/UserGrowth.UserGrade/UserGradeInfo"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/UserGrowth.UserGrade/UserGradeInfo", runtime.WithHTTPPathPattern("/v1/UserGrowth.UserGrade/UserGradeInfo"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -861,7 +829,7 @@ func RegisterUserGradeHandlerClient(ctx context.Context, mux *runtime.ServeMux, 
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/UserGrowth.UserGrade/UserGradeChange", runtime.WithHTTPPathPattern("/UserGrowth.UserGrade/UserGradeChange"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/UserGrowth.UserGrade/UserGradeChange", runtime.WithHTTPPathPattern("/v1/UserGrowth.UserGrade/UserGradeChange"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -881,15 +849,15 @@ func RegisterUserGradeHandlerClient(ctx context.Context, mux *runtime.ServeMux, 
 }
 
 var (
-	pattern_UserGrade_ListGrades_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"UserGrowth.UserGrade", "ListGrades"}, ""))
+	pattern_UserGrade_ListGrades_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "UserGrowth.UserGrade", "ListGrades"}, ""))
 
-	pattern_UserGrade_ListGradePrivileges_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"UserGrowth.UserGrade", "ListGradePrivileges"}, ""))
+	pattern_UserGrade_ListGradePrivileges_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "UserGrowth.UserGrade", "ListGradePrivileges"}, ""))
 
-	pattern_UserGrade_CheckUserPrivilege_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"UserGrowth.UserGrade", "CheckUserPrivilege"}, ""))
+	pattern_UserGrade_CheckUserPrivilege_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "UserGrowth.UserGrade", "CheckUserPrivilege"}, ""))
 
-	pattern_UserGrade_UserGradeInfo_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"UserGrowth.UserGrade", "UserGradeInfo"}, ""))
+	pattern_UserGrade_UserGradeInfo_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "UserGrowth.UserGrade", "UserGradeInfo"}, ""))
 
-	pattern_UserGrade_UserGradeChange_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"UserGrowth.UserGrade", "UserGradeChange"}, ""))
+	pattern_UserGrade_UserGradeChange_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "UserGrowth.UserGrade", "UserGradeChange"}, ""))
 )
 
 var (
