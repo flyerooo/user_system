@@ -51,6 +51,7 @@ func main() {
 	// 注册服务
 	pb.RegisterUserCoinServer(s, &ugserver.UgCoinServer{})
 	pb.RegisterUserGradeServer(s, &ugserver.UgGradeServer{})
+	// 反射服务，简化grpc调用，可以用grpcurl调用
 	reflection.Register(s)
 	// 启动服务
 	log.Printf("server listening at %v\n", lis.Addr())
